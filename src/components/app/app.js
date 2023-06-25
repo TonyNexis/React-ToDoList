@@ -3,21 +3,31 @@ import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import EmployersList from '../employers-list/employers-list';
 import EmployeesAddForm from '../employers-add-form/employers-add-form';
-import WhoAmI from './test-props';
+// import { WhoAmI } from './someTests';
 
 import './app.css';
 
 function App() {
+
+    const data = [
+        {name: 'Tony Nexis', salary: 600, increase: false, id: 1},
+        {name: 'Alex Monk', salary: 1200, increase: false, id: 2},
+        {name: 'John Karakey', salary: 800, increase: false, id: 3},
+        {name: 'Dan Brown', salary: 750, increase: true, id: 4},
+        {name: 'Yoko Shido', salary: 1500, increase: false, id: 5},
+        {name: 'Mala Karyka', salary: 350, increase: false, id: 6},
+    ];
+
     return (
         <div className='app' >
+            {/* <WhoAmI name='John' surname='Smith' link='google.com'/> */}
             <AppInfo/>
-
             <div className="search-panel">
                 <SearchPanel/>
                 <AppFilter/>
             </div>
 
-            <EmployersList/>
+            <EmployersList data={data}/>
             <EmployeesAddForm/>
         </div>
     )
