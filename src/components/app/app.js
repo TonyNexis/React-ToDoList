@@ -4,7 +4,7 @@ import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import EmployersList from '../employers-list/employers-list';
-import EmployeesAddForm from '../employers-add-form/employers-add-form';
+import EmployersAddForm from '../employers-add-form/employers-add-form';
 // import { WhoAmI } from './someTests';
 
 import './app.css';
@@ -32,6 +32,22 @@ class App extends Component {
         })
     }
 
+    addEmployer = (name, salary) => {
+        const newEmployer = {
+            name,
+            salary,
+            increase: false,
+            id: Date.now()
+        }
+
+        this.setState(({data}) => {
+            const newArr = [...data, newEmployer];
+            return {
+                data: newArr
+            }
+        });
+    }
+
     render() {
         return (
             <div className='app' >
@@ -44,7 +60,7 @@ class App extends Component {
     
                 <EmployersList data={this.state.data}
                 onDelete={this.deleteItem}/>
-                <EmployeesAddForm/>
+                <EmployersAddForm onAdd={this.addEmployer}/>
             </div>
         )
     }
