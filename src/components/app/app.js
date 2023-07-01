@@ -20,7 +20,8 @@ class App extends Component {
                 {name: 'Dan Brown', salary: 750, increase: true, rise: false, id: 4},
                 {name: 'Yoko Shido', salary: 1500, increase: false, rise: false, id: 5},
                 {name: 'Mala Karyka', salary: 350, increase: false, rise: false, id: 6},
-            ]
+            ],
+            term: ''
         }
     }
 
@@ -60,17 +61,41 @@ class App extends Component {
         }))
     }
 
+    searchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        // return items.filter(item => {
+        //     return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1
+        // })
+
+        const regex = new RegExp('^' + term.split('').join('.*'), 'i');
+
+        return items.filter(item => {
+          return regex.test(item.name);
+        });
+    }
+
+    onUpdateSearch = (term) => {
+        this.setState({term})
+    }
+
     render() {
+        const {data, term} = this.state;
+        const visibleData = this.searchEmp(data, term)
+
         return (
             <div className='app' >
                 {/* <WhoAmI name='John' surname='Smith' link='google.com'/> */}
                 <AppInfo data={this.state.data}/>
                 <div className="search-panel">
-                    <SearchPanel/>
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <AppFilter/>
                 </div>
     
-                <EmployersList data={this.state.data}
+                <EmployersList 
+                data={visibleData}
                 onDelete={this.deleteItem}
                 onToggleProp={this.onToggleProp}/>
                 <EmployersAddForm onAdd={this.addEmployer}/>
